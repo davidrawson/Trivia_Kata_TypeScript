@@ -19,7 +19,7 @@ export class GameRunner {
             if (Math.floor(random() * 10) == 7) {
                 notAWinner = game.wrongAnswer();
             } else {
-                notAWinner = game.wasCorrectlyAnswered();
+                notAWinner = game.correctlyAnswered();
             }
 
         } while (notAWinner);
