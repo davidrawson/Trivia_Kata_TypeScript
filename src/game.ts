@@ -46,6 +46,10 @@ export class Game {
         console.log(this.players[this.currentPlayer] + " is the current player");
         console.log("They have rolled a " + roll);
 
+        this.move(roll);
+    }
+
+    private move(roll: number) {
         if (this.inPenaltyBox[this.currentPlayer]) {
             if (roll % 2 != 0) {
                 this.isGettingOutOfPenaltyBox = true;
@@ -64,16 +68,19 @@ export class Game {
                 this.isGettingOutOfPenaltyBox = false;
             }
         } else {
-
-            this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
-            if (this.places[this.currentPlayer] > 11) {
-                this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
-            }
-
-            console.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
-            console.log("The category is " + this.currentCategory());
-            this.askQuestion();
+            this.movePlayer(roll);
         }
+    }
+
+    private movePlayer(roll: number) {
+        this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
+        if (this.places[this.currentPlayer] > 11) {
+            this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
+        }
+
+        console.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
+        console.log("The category is " + this.currentCategory());
+        this.askQuestion();
     }
 
     private askQuestion(): void {
