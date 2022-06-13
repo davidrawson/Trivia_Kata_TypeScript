@@ -4,11 +4,11 @@ class Player {
     public place: number;
     public inPenaltyBox: boolean;
 
-    constructor(name: string, purse: number, place: number, inPenaltyBox: boolean) {
+    constructor(name: string) {
         this.name = name;
-        this.purse = purse;
-        this.place = place;
-        this.inPenaltyBox = inPenaltyBox;
+        this.purse = 0;
+        this.place = 0;
+        this.inPenaltyBox = false;
     }
 }
 
@@ -37,7 +37,7 @@ export class Game {
         // new player with a purse, a place, and penalty box toggle
         // but keep the players array
         // data clump
-        const player = new Player(name, 0, 0, false);
+        const player = new Player(name);
 
         this.players.push(player);
 
@@ -137,18 +137,13 @@ export class Game {
     }
 
     public correctlyAnswered(): boolean {
-        if (this.getPlayer().inPenaltyBox) {
-            if (this.isGettingOutOfPenaltyBox) {
-                return this.playerWin();
-            } else {
-                this.currentPlayer += 1;
-                if (this.currentPlayer == this.players.length)
-                    this.currentPlayer = 0;
-                return true;
-            }
-        } else {
-            return this.playerWin();
+        if (this.getPlayer().inPenaltyBox && !this.isGettingOutOfPenaltyBox) {
+            this.currentPlayer += 1;
+            if (this.currentPlayer == this.players.length)
+                this.currentPlayer = 0;
+            return true;
         }
+        return this.playerWin();
     }
 
     private playerWin() {
