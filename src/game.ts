@@ -1,4 +1,13 @@
+class Display {
+    public newPlayer(name: string, players: Array<Player>) {
+        console.log(name + " was added");
+        console.log("They are player number " + players.length);
+    }
+}
+
+
 import {Player} from "./player";
+
 
 export class Game {
 
@@ -10,9 +19,12 @@ export class Game {
     private scienceQuestions: Array<string> = [];
     private sportsQuestions: Array<string> = [];
     private rockQuestions: Array<string> = [];
+    private display: Display;
 
     constructor() {
-
+        this.display = new Display();
+        // Add a categories class
+        // Add a questions class
         for (let i = 0; i < 50; i++) {
             this.popQuestions.push("Pop Question " + i);
             this.scienceQuestions.push("Science Question " + i);
@@ -28,12 +40,12 @@ export class Game {
         const player = new Player(name);
 
         this.players.push(player);
-
-        console.log(name + " was added");
-        console.log("They are player number " + this.players.length);
+        this.display.newPlayer(name, this.players);
 
         return true;
     }
+
+
 
     public roll(roll: number) {
         console.log(this.getPlayer().name + " is the current player");
