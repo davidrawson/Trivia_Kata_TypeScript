@@ -51,10 +51,6 @@ export class Game {
         return true;
     }
 
-    private howManyPlayers(): number {
-        return this.players.length;
-    }
-
     public roll(roll: number) {
         console.log(this.getPlayer().name + " is the current player");
         console.log("They have rolled a " + roll);
