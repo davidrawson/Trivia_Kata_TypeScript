@@ -13,7 +13,7 @@ class Player {
 
 export class Game {
 
-    private players: Array<string> = [];
+    private players: Array<Player> = [];
     private places: Array<number> = [];
     private purses: Array<number> = [];
     private inPenaltyBox: Array<boolean> = [];
@@ -43,7 +43,9 @@ export class Game {
         // new player with a purse, a place, and penalty box toggle
         // but keep the players array
         // data clump
-        this.players.push(name);
+        const player = new Player(name, 0, 0);
+
+        this.players.push(player);
         this.places[this.howManyPlayers() - 1] = 0;
         this.purses[this.howManyPlayers() - 1] = 0;
         this.inPenaltyBox[this.howManyPlayers() - 1] = false;
@@ -59,7 +61,7 @@ export class Game {
     }
 
     public roll(roll: number) {
-        console.log(this.players[this.currentPlayer] + " is the current player");
+        console.log(this.players[this.currentPlayer].name + " is the current player");
         console.log("They have rolled a " + roll);
 
         this.move(roll);
@@ -70,11 +72,11 @@ export class Game {
             if (roll % 2 != 0) {
                 this.isGettingOutOfPenaltyBox = true;
 
-                console.log(this.players[this.currentPlayer] + " is getting out of the penalty box");
+                console.log(this.players[this.currentPlayer].name + " is getting out of the penalty box");
 
                 this.movePlayer(roll);
             } else {
-                console.log(this.players[this.currentPlayer] + " is not getting out of the penalty box");
+                console.log(this.players[this.currentPlayer].name + " is not getting out of the penalty box");
                 this.isGettingOutOfPenaltyBox = false;
             }
         } else {
@@ -88,7 +90,7 @@ export class Game {
             this.places[this.currentPlayer] = this.places[this.currentPlayer] - 12;
         }
 
-        console.log(this.players[this.currentPlayer] + "'s new location is " + this.places[this.currentPlayer]);
+        console.log(this.players[this.currentPlayer].name + "'s new location is " + this.places[this.currentPlayer]);
         console.log("The category is " + this.currentCategory());
         this.askQuestion();
     }
@@ -129,7 +131,7 @@ export class Game {
 
     public wrongAnswer(): boolean {
         console.log('Question was incorrectly answered');
-        console.log(this.players[this.currentPlayer] + " was sent to the penalty box");
+        console.log(this.players[this.currentPlayer].name + " was sent to the penalty box");
         this.inPenaltyBox[this.currentPlayer] = true;
 
         this.currentPlayer += 1;
@@ -156,7 +158,7 @@ export class Game {
     private playerWin() {
         console.log('Answer was correct!!!!');
         this.purses[this.currentPlayer] += 1;
-        console.log(this.players[this.currentPlayer] + " now has " +
+        console.log(this.players[this.currentPlayer].name + " now has " +
             this.purses[this.currentPlayer] + " Gold Coins.");
 
         var winner = this.didPlayerWin();
