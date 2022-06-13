@@ -125,41 +125,29 @@ export class Game {
     public correctlyAnswered(): boolean {
         if (this.inPenaltyBox[this.currentPlayer]) {
             if (this.isGettingOutOfPenaltyBox) {
-                console.log('Answer was correct!!!!');
-                this.purses[this.currentPlayer] += 1;
-                console.log(this.players[this.currentPlayer] + " now has " +
-                    this.purses[this.currentPlayer] + " Gold Coins.");
-
-                var winner = this.didPlayerWin();
-                this.currentPlayer += 1;
-                if (this.currentPlayer == this.players.length)
-                    this.currentPlayer = 0;
-
-                return winner;
+                return this.playerWin();
             } else {
                 this.currentPlayer += 1;
                 if (this.currentPlayer == this.players.length)
                     this.currentPlayer = 0;
                 return true;
             }
-
-
         } else {
-
-            console.log("Answer was correct!!!!");
-
-            this.purses[this.currentPlayer] += 1;
-            console.log(this.players[this.currentPlayer] + " now has " +
-                this.purses[this.currentPlayer] + " Gold Coins.");
-
-            var winner = this.didPlayerWin();
-
-            this.currentPlayer += 1;
-            if (this.currentPlayer == this.players.length)
-                this.currentPlayer = 0;
-
-            return winner;
+            return this.playerWin();
         }
     }
 
+    private playerWin() {
+        console.log('Answer was correct!!!!');
+        this.purses[this.currentPlayer] += 1;
+        console.log(this.players[this.currentPlayer] + " now has " +
+            this.purses[this.currentPlayer] + " Gold Coins.");
+
+        var winner = this.didPlayerWin();
+        this.currentPlayer += 1;
+        if (this.currentPlayer == this.players.length)
+            this.currentPlayer = 0;
+
+        return winner;
+    }
 }
