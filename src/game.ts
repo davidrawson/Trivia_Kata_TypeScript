@@ -1,3 +1,16 @@
+class Player {
+    public name: string;
+    public purse: number;
+    public place: number;
+    public inPenaltyBox: boolean = false;
+
+    constructor(name: string, purse: number, place: number) {
+        this.name = name;
+        this.purse = purse;
+        this.place = place;
+    }
+}
+
 export class Game {
 
     private players: Array<string> = [];
@@ -27,6 +40,9 @@ export class Game {
     }
 
     public add(name: string): boolean {
+        // new player with a purse, a place, and penalty box toggle
+        // but keep the players array
+        // data clump
         this.players.push(name);
         this.places[this.howManyPlayers() - 1] = 0;
         this.purses[this.howManyPlayers() - 1] = 0;
