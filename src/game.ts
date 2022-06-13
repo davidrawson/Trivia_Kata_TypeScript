@@ -2,12 +2,13 @@ class Player {
     public name: string;
     public purse: number;
     public place: number;
-    public inPenaltyBox: boolean = false;
+    public inPenaltyBox: boolean;
 
-    constructor(name: string, purse: number, place: number) {
+    constructor(name: string, purse: number, place: number, inPenaltyBox: boolean) {
         this.name = name;
         this.purse = purse;
         this.place = place;
+        this.inPenaltyBox = inPenaltyBox;
     }
 }
 
@@ -43,7 +44,7 @@ export class Game {
         // new player with a purse, a place, and penalty box toggle
         // but keep the players array
         // data clump
-        const player = new Player(name, 0, 0);
+        const player = new Player(name, 0, 0, false);
 
         this.players.push(player);
         this.places[this.howManyPlayers() - 1] = 0;
@@ -68,7 +69,9 @@ export class Game {
     }
 
     private move(roll: number) {
-        if (this.inPenaltyBox[this.currentPlayer]) {
+        // if (this.inPenaltyBox[this.currentPlayer]) {
+        if (this.players[this.currentPlayer].inPenaltyBox) {
+
             if (roll % 2 != 0) {
                 this.isGettingOutOfPenaltyBox = true;
 
@@ -132,7 +135,8 @@ export class Game {
     public wrongAnswer(): boolean {
         console.log('Question was incorrectly answered');
         console.log(this.players[this.currentPlayer].name + " was sent to the penalty box");
-        this.inPenaltyBox[this.currentPlayer] = true;
+        // this.inPenaltyBox[this.currentPlayer] = true;
+        this.players[this.currentPlayer].inPenaltyBox = true;
 
         this.currentPlayer += 1;
         if (this.currentPlayer == this.players.length)
@@ -141,7 +145,7 @@ export class Game {
     }
 
     public correctlyAnswered(): boolean {
-        if (this.inPenaltyBox[this.currentPlayer]) {
+        if (this.players[this.currentPlayer].inPenaltyBox) {
             if (this.isGettingOutOfPenaltyBox) {
                 return this.playerWin();
             } else {
