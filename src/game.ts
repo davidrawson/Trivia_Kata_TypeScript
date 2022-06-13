@@ -59,7 +59,9 @@ export class Game {
     }
 
     private move(roll: number) {
-        if (this.getPlayer().inPenaltyBox) {
+        if (!this.getPlayer().inPenaltyBox) {
+            this.movePlayer(roll);
+        } else {
 
             if (roll % 2 != 0) {
                 this.isGettingOutOfPenaltyBox = true;
@@ -71,8 +73,6 @@ export class Game {
                 console.log(this.getPlayer().name + " is not getting out of the penalty box");
                 this.isGettingOutOfPenaltyBox = false;
             }
-        } else {
-            this.movePlayer(roll);
         }
     }
 
@@ -82,13 +82,17 @@ export class Game {
 
     private movePlayer(roll: number) {
         this.getPlayer().place = this.getPlayer().place + roll;
-        if (this.getPlayer().place > 11) {
-            this.getPlayer().place = this.getPlayer().place - 12;
-        }
+        this.playerOutOfBounds();
 
         console.log(this.getPlayer().name + "'s new location is " + this.getPlayer().place);
         console.log("The category is " + this.currentCategory());
         this.askQuestion();
+    }
+
+    private playerOutOfBounds() {
+        if (this.getPlayer().place > 11) {
+            this.getPlayer().place = this.getPlayer().place - 12;
+        }
     }
 
     private askQuestion(): void {
@@ -158,10 +162,15 @@ export class Game {
             this.getPlayer().purse + " Gold Coins.");
 
         var winner = this.didPlayerWin();
-        this.currentPlayer += 1;
-        if (this.currentPlayer == this.players.length)
-            this.currentPlayer = 0;
+        this.resetPlayer();
 
         return winner;
+    }
+
+    private resetPlayer() {
+        this.currentPlayer += 1;
+        if (this.currentPlayer == this.players.length) {
+            this.currentPlayer = 0;
+        }
     }
 }
