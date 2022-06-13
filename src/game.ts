@@ -16,8 +16,6 @@ export class Game {
 
     private players: Array<Player> = [];
     private places: Array<number> = [];
-    private purses: Array<number> = [];
-    private inPenaltyBox: Array<boolean> = [];
     private currentPlayer: number = 0;
     private isGettingOutOfPenaltyBox: boolean = false;
 
@@ -48,8 +46,6 @@ export class Game {
 
         this.players.push(player);
         this.places[this.howManyPlayers() - 1] = 0;
-        this.purses[this.howManyPlayers() - 1] = 0;
-        this.inPenaltyBox[this.howManyPlayers() - 1] = false;
 
         console.log(name + " was added");
         console.log("They are player number " + this.players.length);
@@ -69,7 +65,6 @@ export class Game {
     }
 
     private move(roll: number) {
-        // if (this.inPenaltyBox[this.currentPlayer]) {
         if (this.players[this.currentPlayer].inPenaltyBox) {
 
             if (roll % 2 != 0) {
@@ -129,13 +124,12 @@ export class Game {
     }
 
     private didPlayerWin(): boolean {
-        return !(this.purses[this.currentPlayer] == 6)
+        return !(this.players[this.currentPlayer].purse == 6)
     }
 
     public wrongAnswer(): boolean {
         console.log('Question was incorrectly answered');
         console.log(this.players[this.currentPlayer].name + " was sent to the penalty box");
-        // this.inPenaltyBox[this.currentPlayer] = true;
         this.players[this.currentPlayer].inPenaltyBox = true;
 
         this.currentPlayer += 1;
@@ -161,9 +155,9 @@ export class Game {
 
     private playerWin() {
         console.log('Answer was correct!!!!');
-        this.purses[this.currentPlayer] += 1;
+        this.players[this.currentPlayer].purse += 1;
         console.log(this.players[this.currentPlayer].name + " now has " +
-            this.purses[this.currentPlayer] + " Gold Coins.");
+            this.players[this.currentPlayer].purse + " Gold Coins.");
 
         var winner = this.didPlayerWin();
         this.currentPlayer += 1;
