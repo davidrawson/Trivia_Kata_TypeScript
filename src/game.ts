@@ -78,14 +78,14 @@ export class Game {
     }
 
     private askQuestion(): void {
-        if (this.currentCategory() == 'Pop')
-            console.log(this.popQuestions.shift());
-        if (this.currentCategory() == 'Science')
-            console.log(this.scienceQuestions.shift());
-        if (this.currentCategory() == 'Sports')
-            console.log(this.sportsQuestions.shift());
-        if (this.currentCategory() == 'Rock')
-            console.log(this.rockQuestions.shift());
+        const categories = {
+            'Pop': this.popQuestions,
+            'Science': this.scienceQuestions,
+            'Sports': this.sportsQuestions,
+            'Rock': this.rockQuestions
+        }
+
+        console.log(categories[this.currentCategory()].shift())
     }
 
     private currentCategory(): string {
